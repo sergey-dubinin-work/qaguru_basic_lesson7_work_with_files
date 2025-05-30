@@ -1,0 +1,28 @@
+plugins{
+    id 'java-library'
+}
+
+def jUnitVersion = '5.12.2'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation (
+            "org.junit.jupiter:junit-jupiter:$jUnitVersion",
+    )
+    testRuntimeOnly (
+            "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
+    )
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+test{
+    useJUnitPlatform()
+}
