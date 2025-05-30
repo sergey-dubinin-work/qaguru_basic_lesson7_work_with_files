@@ -2,7 +2,7 @@ plugins{
     id 'java-library'
 }
 
-def jUnitVersion = '5.12.2',
+def jUnitVersion = '5.8.1',
         webDriverManagerVersion = '5.9.3',
         selenideVersion = '7.7.3',
         assertJVersion = '3.27.3'
