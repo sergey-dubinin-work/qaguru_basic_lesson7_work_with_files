@@ -4,7 +4,8 @@ plugins{
 
 def jUnitVersion = '5.12.2',
         webDriverManagerVersion = '5.9.3',
-        selenideVersion = '7.7.3'
+        selenideVersion = '7.7.3',
+        assertJVersion = '3.27.3'
 
 repositories {
     mavenCentral()
@@ -15,6 +16,7 @@ dependencies {
             "org.junit.jupiter:junit-jupiter:$jUnitVersion",
             "io.github.bonigarcia:webdrivermanager:$webDriverManagerVersion",
             "com.codeborne:selenide:$selenideVersion",
+            "org.assertj:assertj-core:$assertJVersion"
     )
     testRuntimeOnly (
             "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
