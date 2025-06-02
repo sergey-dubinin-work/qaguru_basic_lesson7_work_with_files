@@ -16,7 +16,11 @@ dependencies {
             "org.junit.jupiter:junit-jupiter:$jUnitVersion",
             "io.github.bonigarcia:webdrivermanager:$webDriverManagerVersion",
             "com.codeborne:selenide:$selenideVersion",
-            "org.assertj:assertj-core:$assertJVersion"
+            "org.assertj:assertj-core:$assertJVersion",
+            "com.codeborne:pdf-test:1.9.2",
+            "com.codeborne:xls-test:1.7.2",
+            "com.opencsv:opencsv:5.11",
+            "org.apache.poi:poi:5.2.5"
     )
     testRuntimeOnly (
             "org.junit.jupiter:junit-jupiter-engine:$jUnitVersion"
