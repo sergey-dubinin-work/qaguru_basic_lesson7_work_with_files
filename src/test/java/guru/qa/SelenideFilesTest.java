@@ -1,5 +1,6 @@
 package guru.qa;
 
+import com.codeborne.selenide.SelenideElement;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -54,9 +55,44 @@ public class SelenideFilesTest {
     }
 
     @Test
-    void dragAndDropUploadFile() {
+    void dragAndDropUploadFile() throws URISyntaxException {
         open("https://the-internet.herokuapp.com/upload");
 
-        // todo: Реализовать загрузку через drag'n'drop
+        // Получаем файл из ресурсов
+        File file = new File(getClass().getClassLoader().getResource("files/hello.txt").toURI());
+
+        // Находим элемент drop-зоны
+        SelenideElement dropzone = $("#drag-drop-upload");
+
+        // Создаём input[type="file"] с JS и добавляем его в DOM
+        String jsCreateInput = "let input = document.createElement('input');" +
+                "input.type = 'file';" +
+                "input.style.display = 'none';" +
+                "input.id = 'temp-upload';" +
+                "document.body.appendChild(input);";
+        executeJavaScript(jsCreateInput);
+
+        // Загружаем файл в скрытый input
+        $("#temp-upload").uploadFile(file);
+
+        // Генерируем dragenter + drop событие
+        String jsDnD = "var target = arguments[0];" +
+                "var input = document.getElementById('temp-upload');" +
+                "var rect = target.getBoundingClientRect();" +
+                "var dataTransfer = new DataTransfer();" +
+                "dataTransfer.items.add(input.files[0]);" +
+                "['dragenter', 'drop'].forEach(function(eventType) {" +
+                "  var event = new DragEvent(eventType, {" +
+                "    dataTransfer: dataTransfer," +
+                "    bubbles: true," +
+                "    cancelable: true," +
+                "    clientX: rect.left + 10," +
+                "    clientY: rect.top + 10" +
+                "  });" +
+                "  target.dispatchEvent(event);" +
+                "});";
+        executeJavaScript(jsDnD, dropzone);
+
+        $(".dz-filename").shouldHave(exactText("hello.txt"));
     }
 }
